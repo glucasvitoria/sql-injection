@@ -10,9 +10,20 @@ session_start();
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$sql_query = "SELECT id,password FROM logins WHERE email =" . $email;
+$sql_query = "SELECT id FROM logins WHERE email ='$email' AND password='$password'";
 
-$conn->query($sql_query);
+$result = $conn->query($sql_query);
+$row = $result->fetch_assoc();
+
+
+if ($result->num_rows > 0) {
+    $_SESSION['id'] = $row['id'];
+    echo "Login successful!";
+} else {
+    echo "Invalid email or password!";
+}
+
+
 
 
 
